@@ -4,16 +4,16 @@ A lightweight, dependency-free Python library of string helpers: case conversion
 
 ## Installation
 
-Copy `string_utils.py` into your project, then:
+Copy `StringUtils.py` into your project, then:
 
 ```python
-import string_utils as su
+import StringUtils as su
 ```
 
 ## Quick start
 
 ```python
-import string_utils as su
+import StringUtils as su
 
 su.to_snake_case("HelloWorld")        # "hello_world"
 su.to_camel_case("hello_world")       # "helloWorld"
