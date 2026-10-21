@@ -1,0 +1,9 @@
+LICENSE
+README.md
+pyproject.toml
+src/StringUtils/__init__.py
+src/StringUtils/main.py
+src/StringUtils_darhkharo.egg-info/PKG-INFO
+src/StringUtils_darhkharo.egg-info/SOURCES.txt
+src/StringUtils_darhkharo.egg-info/dependency_links.txt
+src/StringUtils_darhkharo.egg-info/top_level.txt

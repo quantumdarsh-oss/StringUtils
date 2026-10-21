@@ -1,7 +1,50 @@
-from typing import List
+import re
+from typing import List, Union
+'''
+git pull                          # 1. get any changes from GitHub first
+# ... edit your code ...
+git status                        # 2. see what changed
+git add .                         # 3. stage changes
+git commit -m "Short description of what you did"   # 4. save locally
+git push                          # 5. upload to GitHub
+'''
+
 def levenshtein(a,b):...
 def lcs(a, b):...
-def to_snake_case(string):...
+
+class InvalidInput(TypeError):
+    """Raised when the input is not a string or a list of strings."""
+def to_snake_case(string: Union[List[str], str]) -> str:
+    """
+    Description:
+        Converts a given string or list of strings into a snake case string.
+        Handles camelCase, PascalCase, spaces, hyphens and mixed separators.
+
+    :param string:
+        List[str] | str
+
+    :return:
+        str
+
+    :raises InvalidInput:
+        If the input is not a string or a list of strings.
+    """
+    if isinstance(string, list):
+        if not all(isinstance(s, str) for s in string):
+            raise InvalidInput("Input is not a string or list of strings")
+        string = " ".join(string)
+    elif not isinstance(string, str):
+        raise InvalidInput("Input is not a string or list of strings")
+
+    # Split acronym/word boundaries: "HTTPServer" -> "HTTP_Server"
+    s = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1_\2", string)
+    # Split lower/digit-to-upper boundaries: "camelCase" -> "camel_Case"
+    s = re.sub(r"([a-z\d])([A-Z])", r"\1_\2", s)
+    # Replace any run of non-alphanumeric characters with one underscore
+    s = re.sub(r"[^A-Za-z0-9]+", "_", s)
+
+    return s.strip("_").lower()
+
 def to_camel_case(string):...
 def to_kebab_case(string):...
 def to_lower_case(string):...
