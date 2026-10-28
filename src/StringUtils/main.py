@@ -1,5 +1,5 @@
 import re
-from typing import List, Union
+from typing import List, Union,DefaultDict,Tuple
 '''
 git pull                          # 1. get any changes from GitHub first
 # ... edit your code ...
@@ -14,6 +14,10 @@ def lcs(a, b):...
 
 class InvalidInput(TypeError):
     """Raised when the input is not a string or a list of strings."""
+class InvalidCharError(Exception):
+    def __init__(self,char):
+        super().__init__(f"The character {self.char}does not exist in the string")
+        self.char = char
 def to_snake_case(string: Union[List[str], str]) -> str:
     """
     Description:
@@ -45,8 +49,14 @@ def to_snake_case(string: Union[List[str], str]) -> str:
 
     return s.strip("_").lower()
 
-def to_camel_case(string):...
+def to_camel_case(string:Union[List[str],str],type = "var"):
+    if type == "class":
+        pass
+    if type == "var":
+        pass
+
 def to_kebab_case(string):...
+def to_train_case(string):...
 def to_lower_case(string):...
 def to_upper_case(string):...
 def title_case(string):...
@@ -70,8 +80,45 @@ def pretty_print(string:Union[str,List[str]]) -> Union[str,List[str]]:
 
 def reverse(string):...
 def rot13(string):...
-def longest_word(string):...
-def char_frequency(string):...
+def longest_word(string:str)->str:
+    """
+    description:
+        Finds the longest word in the given string
+    :param string:
+    :return:
+    """
+    pattern = r"\w+"
+    result = re.findall(pattern, string)
+    filtered = [ len(i) for i in result]
+    idx = filtered.index(max(filtered))
+    longest_word = result[idx]
+    return longest_word
+
+def char_frequency(string:Union[str,List[str]],char) -> List[Tuple[str,int]]:
+    """
+    description: A function to find frequqncy of a character
+    :param string:
+    :param char:
+    :return: a list of integers
+    """
+    if isinstance(string, str):
+        if char not in string:
+            raise InvalidCharError(char)
+        counts = {}
+        for i in string:
+            count = 0
+            for j in string:
+                if i == j:
+                    count += 1
+            counts[i] = count
+        counts = [ (key,value) for key,value in counts.items()]
+        return counts
+
+    if isinstance(string, list):
+        if char not in string:
+            raise InvalidCharError(char)
+        print("Under Development, Sorry for the inconvenience :(")
+
 def vowel_count(string):...
 def similarity(string):...
 def hamming_distance(string):...
