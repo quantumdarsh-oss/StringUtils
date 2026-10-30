@@ -1,5 +1,6 @@
 import re
 from typing import List, Union,DefaultDict,Tuple
+import struct
 '''
 git pull                          # 1. get any changes from GitHub first
 # ... edit your code ...
@@ -125,9 +126,40 @@ def hamming_distance(string):...
 def compare_versions(string):...
 
 # Number systems and encodings
-def to_binary(n):...
+def to_binary(value:Union[str,int,float],contiguous=True)->str:
+    """
+    description: A function to convert int, float and str to binary strings
+    :param value:
+    :return: str
+    """
+    if isinstance(value, str):
+        binary_out = ""
+        for i in value:
+            binary_out += f"{ord(i):08b}"
+        return binary_out
+    if isinstance(value, int):
+        return f"{value:b}"
+    if isinstance(value, float):
+        packed = struct.pack("!f",value)
+        integ = struct.unpack('!I',packed)[0]
+        return f"{integ:32b}"
+
 def from_binary(string):...
-def to_hex(string):...
+def to_hex(value:Union[str,int,float])->str:
+    """
+    description: A function to convert int, float and str to hex strings
+    :param value:
+    :return:
+    """
+    if isinstance(value, str):
+        hex_out = value.encode('utf-8').hex(' ')
+        return hex_out
+    if isinstance(value, int):
+        return hex(value)
+    if isinstance(value, float):
+        return hex(value)
+
+
 def from_hex(string):...
 def to_octal(string):...
 def from_octal(string):...
@@ -138,7 +170,21 @@ def hex_to_text(string):...
 def ascii_codes(s):...
 
 # Networking
-def is_valid_ipv4(string):...
+def is_valid_ipv4(string:str)->bool:
+    """
+    :param string:
+    :return:
+    """
+    pattern = r"\d+"
+    result = re.findall(pattern, string)
+    try:
+        result = [ int(i) for i in result]
+        if all(0<=i<=255 for i in result):
+            return True
+        else:
+            return False
+    except Exception as e:
+        print(f"Error: {e} value must be integer ")
 def is_valid_ipv6(string):...
 def is_private_ip(string):...
 
